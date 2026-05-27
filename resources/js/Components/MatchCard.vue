@@ -70,7 +70,7 @@ const canPredict = () =>
                 {{ match.status === 'live' ? '🔴 Ao vivo' : match.status === 'finished' ? '✅ Encerrado' : '🕐 Aguardando' }}
             </span>
             <span v-if="match.scheduled_at" class="text-xs text-gray-400">
-                {{ new Date(match.scheduled_at).toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }) }}
+                {{ new Date(match.scheduled_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) }}
             </span>
         </div>
 

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('world_cup_group_id')->nullable()->constrained()->nullOnDelete();
             $table->enum('stage', ['group', 'r32', 'r16', 'qf', 'sf', '3rd', 'final']);
             $table->integer('match_number')->unique();
-            $table->dateTime('scheduled_at')->nullable();
+            $table->timestampTz('scheduled_at')->nullable();
             $table->string('venue')->nullable();
             $table->string('city')->nullable();
             $table->unsignedTinyInteger('home_score')->nullable();
