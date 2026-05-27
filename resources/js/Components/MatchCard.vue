@@ -6,18 +6,20 @@ const props = defineProps({
     match: Object,
 });
 
-const homeScore = ref('');
-const awayScore = ref('');
+const homeScore = ref(null);
+const awayScore = ref(null);
 
 onMounted(() => {
     if (props.match.user_prediction) {
-        homeScore.value = props.match.user_prediction.home_score ?? '';
-        awayScore.value = props.match.user_prediction.away_score ?? '';
+        homeScore.value = props.match.user_prediction.home_score ?? null;
+        awayScore.value = props.match.user_prediction.away_score ?? null;
     }
 });
 
+const isSet = (v) => v !== null && v !== '' && v !== undefined;
+
 function submit() {
-    if (homeScore.value === '' || awayScore.value === '') return;
+    if (!isSet(homeScore.value) || !isSet(awayScore.value)) return;
     router.post(route('predictions.upsert', props.match.id), {
         home_score: Number(homeScore.value),
         away_score: Number(awayScore.value),
@@ -137,9 +139,9 @@ const canPredict = () =>
             </div>
             <button
                 @click="submit"
-                :disabled="homeScore === '' || awayScore === ''"
+                :disabled="!isSet(homeScore) || !isSet(awayScore)"
                 class="mt-3 w-full py-1.5 rounded-lg text-sm font-semibold transition"
-                :class="homeScore !== '' && awayScore !== ''
+                :class="isSet(homeScore) && isSet(awayScore)
                     ? 'bg-green-600 text-white hover:bg-green-700'
                     : 'bg-gray-100 text-gray-400 cursor-not-allowed'"
             >
